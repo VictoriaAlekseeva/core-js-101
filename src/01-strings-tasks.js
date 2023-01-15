@@ -52,7 +52,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-  return `Hello, ${firstName} ${lastName}`
+  return `Hello, ${firstName} ${lastName}`;
 }
 
 /**
@@ -66,7 +66,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-  return value.slice(7, -1)
+  return value.slice(7, -1);
 }
 
 
@@ -203,13 +203,13 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-
-  let top = `┌${'─'.repeat(width-2)} ┐\n`;
-  let body = `│${' '.repeat(width-2)}│\n`.repeat(height-2);
-  let bottom = `└${'─'.repeat(width-2)}┘\n`
+  const lengthFilling = '─';
+  const bodyFilling = ' ';
+  const top = `┌${lengthFilling.repeat(width - 2)}┐\n`;
+  const body = `│${bodyFilling.repeat(width - 2)}│\n`.repeat(height - 2);
+  const bottom = `└${lengthFilling.repeat(width - 2)}┘\n`;
   return top.concat(body, bottom);
 }
-
 
 /**
  * Encode specified string with ROT13 cipher
@@ -228,27 +228,24 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-
   const shift = 13;
-  let alphabetLength = 26;
+  const alphabetLength = 26;
   let codeStr = '';
   let codeCharIndex;
 
   const alphabetUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const alphabetLowerCase = 'abcdefghijklmnopqrstuvwxyz';
 
-  for (let char of str) {
-    if (alphabetUpperCase.indexOf(char) != -1) {
-      codeCharIndex = (alphabetUpperCase.indexOf(char) + shift) % alphabetLength;
+  for (let i = 0; i < str.length; i += 1) {
+    if (alphabetUpperCase.indexOf(str[i]) !== -1) {
+      codeCharIndex = (alphabetUpperCase.indexOf(str[i]) + shift) % alphabetLength;
       codeStr += alphabetUpperCase[codeCharIndex];
-    } else if (alphabetLowerCase.indexOf(char) != -1) {
-      codeCharIndex = (alphabetLowerCase.indexOf(char) + shift) % alphabetLength;
+    } else if (alphabetLowerCase.indexOf(str[i]) !== -1) {
+      codeCharIndex = (alphabetLowerCase.indexOf(str[i]) + shift) % alphabetLength;
       codeStr += alphabetLowerCase[codeCharIndex];
-    } else codeStr += char;
+    } else codeStr += str[i];
   }
-
   return codeStr;
-
 }
 
 /**
@@ -294,7 +291,7 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-  let cardSet = ['A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣','A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦','A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥','A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠']
+  const cardSet = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣', 'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦', 'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥', 'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
   return cardSet.indexOf(value);
 }
 
