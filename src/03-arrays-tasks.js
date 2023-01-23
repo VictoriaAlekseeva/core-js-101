@@ -36,12 +36,8 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-  const arr = [];
-  for (let i = 0; i < len; i += 1) {
-    arr.push(2 * i + 1);
-  }
-
-  return arr;
+  const arr = Array(len);
+  return arr.fill().map((item, index) => 2 * index + 1);
 }
 
 
@@ -276,13 +272,7 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-  const newArr = arr.reduce((acc, item, index) => {
-    for (let i = 0; i <= index; i += 1) {
-      acc.push(item);
-    }
-    return acc;
-  }, []);
-  return newArr;
+  return arr.reduce((acc, item, index) => acc.concat(Array(index + 1).fill(item)), []);
 }
 
 
@@ -440,8 +430,10 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  arr.sort((a, b) => ((a.city < b.city) ? 1 : -1));
+  arr.sort((a, b) => ((a.country > b.country) ? 1 : -1));
+  return arr;
 }
 
 /**
@@ -480,7 +472,8 @@ function getIdentityMatrix(/* n */) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(start, end) {
-  return [].reduce((acc, item) => acc.push((item >= start) && (item <= end)), []);
+  const arr = Array(end - start + 1);
+  return arr.fill().map((item, index) => (start + index));
 }
 
 /**
@@ -494,8 +487,8 @@ function getIntervalArray(start, end) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  return arr.filter((item, index) => arr.indexOf(item) === index);
 }
 
 /**
