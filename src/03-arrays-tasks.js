@@ -326,16 +326,11 @@ function getPositivesCount(arr) {
  */
 function sortDigitNamesByNumericOrder(arr) {
   const digitNumbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-  const newArr = [];
-  for (let i = 0; i < digitNumbers.length; i += 1) {
-    for (let j = 0; j < arr.length; j += 1) {
-      if (arr[j] === digitNumbers[i]) {
-        newArr.push(digitNumbers[i]);
-      }
-    }
-  }
 
-  return newArr;
+  if (arr.length > 0) {
+    return arr.sort((a, b) => digitNumbers.indexOf(a) - digitNumbers.indexOf(b));
+  }
+  return [];
 }
 
 /**
@@ -454,8 +449,10 @@ function sortCitiesArray(arr) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const matrix = Array(n).fill(Array(n).fill(0));
+
+  return matrix.map((itemI, indexI) => itemI.map((_, indexJ) => (indexI === indexJ ? 1 : 0)));
 }
 
 /**
@@ -539,8 +536,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.flatMap(childrenSelector);
 }
 
 
