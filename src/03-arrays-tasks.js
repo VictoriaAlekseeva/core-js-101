@@ -253,7 +253,7 @@ function getMovingSum(arr) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-  return arr.filter((el, index) => index % 2 !== 0);
+  return arr.filter((_, index) => index % 2 !== 0);
 }
 
 
@@ -272,7 +272,7 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-  return arr.reduce((acc, item, index) => acc.concat(Array(index + 1).fill(item)), []);
+  return arr.reduce((acc, item, index) => [...acc, ...Array(index + 1).fill(item)], []);
 }
 
 
@@ -518,8 +518,13 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  return array.reduce((acc, value) => {
+    if (acc.has(keySelector(value))) {
+      acc.get(keySelector(value)).push(valueSelector(value));
+    } else acc.set(keySelector(value), [valueSelector(value)]);
+    return acc;
+  }, new Map());
 }
 
 
@@ -552,9 +557,11 @@ function selectMany(arr, childrenSelector) {
  *   [[1, 2], [3, 4], [5, 6]], [0,0]  => 1        (arr[0][0])
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
+ *
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  const flatArr = arr.flat(indexes.length);
+  return flatArr[indexes.reduce((acc, item) => acc + item)];
 }
 
 
@@ -576,10 +583,14 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
-}
 
+function swapHeadAndTail(arr) {
+  const tail = arr.slice(Math.ceil(arr.length / 2), arr.length);
+  const head = arr.slice(0, Math.floor(arr.length / 2));
+  return ((arr.length % 2 === 0)
+    ? [...tail, ...head]
+    : [...tail, arr[Math.floor(arr.length / 2)], ...head]);
+}
 
 module.exports = {
   findElement,
