@@ -105,7 +105,6 @@ function angleBetweenClockHands(date) {
 
   let angle = Math.abs(hourAngle - minAngle);
   if (angle > 180) angle = 360 - angle;
-  console.log(date, minAngle, hourAngle, angle);
   return Math.PI * 2 * (angle / 360);
 }
 
